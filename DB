@@ -1,0 +1,62 @@
+USE [StudentLibrary]
+GO
+
+------------------------------------------------------------
+-- Table: Books
+------------------------------------------------------------
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Books](
+    [BookID] INT NOT NULL,
+    [Title] VARCHAR(100) NOT NULL,
+    [Author] VARCHAR(100) NULL,
+    [ISBN] BIGINT NULL,
+    [Publication] VARCHAR(100) NULL,
+    [Subject] VARCHAR(100) NULL,
+    [OriginalStock] INT NULL,
+    [CurrentStock] INT NULL,
+    CONSTRAINT [PK_Books] PRIMARY KEY CLUSTERED ([BookID] ASC)
+) ON [PRIMARY]
+GO
+
+------------------------------------------------------------
+-- Table: Student
+------------------------------------------------------------
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Student](
+    [StudentID] INT NOT NULL,
+    [StudentName] VARCHAR(100) NOT NULL,
+    [MobileNo] BIGINT NULL,
+    [RegdNo] VARCHAR(50) NOT NULL,
+    [Branch] VARCHAR(100) NOT NULL,
+    CONSTRAINT [PK_Student] PRIMARY KEY CLUSTERED ([StudentID] ASC)
+) ON [PRIMARY]
+GO
+
+------------------------------------------------------------
+-- Table: BookIssued
+------------------------------------------------------------
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[BookIssued](
+    [IssueID] INT NOT NULL,
+    [IssueDate] DATE NULL,
+    [ReturnDate] DATE NULL,
+    [IssueStatus] BIT NULL,
+    [BookID] INT NOT NULL,
+    [StudentID] INT NOT NULL,
+    CONSTRAINT [PK_BookIssued] PRIMARY KEY CLUSTERED ([IssueID] ASC),
+    CONSTRAINT [FK_BookIssued_Books] FOREIGN KEY ([BookID]) REFERENCES [dbo].[Books]([BookID]),
+    CONSTRAINT [FK_BookIssued_Student] FOREIGN KEY ([StudentID]) REFERENCES [dbo].[Student]([StudentID])
+) ON [PRIMARY]
+GO
